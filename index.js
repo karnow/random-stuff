@@ -1,0 +1,1 @@
+console.log("Hello world i karol oraz mietek i jan");
