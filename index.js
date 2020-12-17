@@ -1,14 +1,19 @@
-const {ApolloServer} = require("apollo-server");
+const {ApolloServer, gql} = require("apollo-server");
 
-const typeDefs = `
+const typeDefs = gql`
 type Query {
-    greeting: String
+    greeting: String,
+    intereStringUrls: [String]
 }
 
 `;
 
+const data = {
+    greeting: "Hello World",
+    intereStringUrls: ["www.onet.pl", "www.wp.pl"]
+}
 
-const server = new ApolloServer({typeDefs});
+const server = new ApolloServer({typeDefs, rootValue:data});
 
 server.listen({port: 4000}).then((result) => console.log(result.url, result.subscriptionsPath));
 
