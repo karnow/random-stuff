@@ -14,7 +14,7 @@ const data = {
     intereStringUrls: ["www.onet.pl", "www.wp.pl"]
 }
 
-const server = new ApolloServer({typeDefs, rootValue:data});
+const server = new ApolloServer({typeDefs, rootValue:data, playground=true, introspection=true});
 
 server.listen({port: PORT}).then((result) => console.log(result.url, result.port));
 
