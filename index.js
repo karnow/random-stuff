@@ -8,13 +8,26 @@ type Query {
     randomDiceThrow: Int,
     pi: Float,
     isTodayFriday: Boolean,
-    randomCoinTossesUntilTrue: [Boolean]
+    randomCoinTossesUntilTrue: [Boolean],
+    today:DayOfWeek
 }
+
+enum DayOfWeek {
+    MON
+    TUE
+    WED
+    THU
+    SAT
+    FRI 
+    SUN
+}
+
 
 `;
 function rootValue() {
     
 const today =new Date;
+const DAYS_OF_WEEK = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
 const getRandomDiceThrow =(sides)=> Math.ceil(Math.random()* sides);
 const randomCoinToss =() => Math.random()>0.5;
 const getRandomCoinTossesUntilTrue =()=> {
@@ -33,7 +46,8 @@ const data = {
     randomDiceThrow: getRandomDiceThrow(6),
     pi: Math.PI,
     isTodayFriday: today.getDay() === 5,
-    randomCoinTossesUntilTrue:getRandomCoinTossesUntilTrue()
+    randomCoinTossesUntilTrue:getRandomCoinTossesUntilTrue(),
+    today: DAYS_OF_WEEK[today.getDay()]
 
 }
 return data;
