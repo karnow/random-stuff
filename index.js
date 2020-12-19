@@ -3,15 +3,16 @@ const PORT = process.env.PORT || 4000
 
 const typeDefs = gql`
 type Query {
-    greeting: String,
-    intereStringUrls: [String],
-    randomDiceThrow: Int,
-    pi: Float,
-    isTodayFriday: Boolean,
-    randomCoinTossesUntilTrue: [Boolean],
-    today:DayOfWeek
+    greeting: String!,
+    schroedingersCatGreeting: String,
+    intereStringUrls: [String!]!,
+    randomDiceThrow: Int!,
+    pi: Float!,
+    isTodayFriday: Boolean!,
+    randomCoinTossesUntilTrue: [Boolean!]!,
+    today: DayOfWeek!,
+    workDays: [DayOfWeek!]!
 }
-
 enum DayOfWeek {
     MON
     TUE
@@ -27,7 +28,7 @@ enum DayOfWeek {
 function rootValue() {
     
 const today =new Date;
-const DAYS_OF_WEEK = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
+const DAYS_OF_WEEK = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 const getRandomDiceThrow =(sides)=> Math.ceil(Math.random()* sides);
 const randomCoinToss =() => Math.random()>0.5;
 const getRandomCoinTossesUntilTrue =()=> {
@@ -42,12 +43,14 @@ const getRandomCoinTossesUntilTrue =()=> {
 
 const data = {
     greeting: "Hello orld",
+    schroedingersCatGreeting: randomCoinToss() ? "Meow!" : null,
     intereStringUrls: ["www.onet.pl", "www.wp.pl", 8],
     randomDiceThrow: getRandomDiceThrow(6),
     pi: Math.PI,
     isTodayFriday: today.getDay() === 5,
     randomCoinTossesUntilTrue:getRandomCoinTossesUntilTrue(),
-    today: DAYS_OF_WEEK[today.getDay()]
+    today: DAYS_OF_WEEK[today.getDay()],
+    workDays: DAYS_OF_WEEK.slice(1, 6)
 
 }
 return data;
