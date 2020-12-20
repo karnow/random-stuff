@@ -1,4 +1,5 @@
 const {ApolloServer, gql} = require("apollo-server");
+const Quotes = require("inspirational-quotes");
 const PORT = process.env.PORT || 4000
 
 const typeDefs = gql`
@@ -11,8 +12,16 @@ type Query {
     isTodayFriday: Boolean!,
     randomCoinTossesUntilTrue: [Boolean!]!,
     today: DayOfWeek!,
-    workDays: [DayOfWeek!]!
+    workDays: [DayOfWeek!]!,
+    randomQuote:Quote,
+    randomQuote2:[Quote]
 }
+
+type Quote {
+    text: String!,
+    author: String!
+}
+
 enum DayOfWeek {
     MON
     TUE
@@ -28,6 +37,7 @@ enum DayOfWeek {
 function rootValue() {
     
 const today =new Date;
+const tableQuotes = [];
 const DAYS_OF_WEEK = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 const getRandomDiceThrow =(sides)=> Math.ceil(Math.random()* sides);
 const randomCoinToss =() => Math.random()>0.5;
@@ -37,7 +47,12 @@ const getRandomCoinTossesUntilTrue =()=> {
         result.push(randomCoinToss());
     } while (!result[result.length -1 ]);
     return result;
-    }
+    };
+const tabelq= ()=> { 
+    tableQuotes[0]= Quotes.getQuote(); 
+    tableQuotes[1]= Quotes.getQuote();
+    return tableQuotes
+} 
 
 
 
@@ -50,7 +65,11 @@ const data = {
     isTodayFriday: today.getDay() === 5,
     randomCoinTossesUntilTrue:getRandomCoinTossesUntilTrue(),
     today: DAYS_OF_WEEK[today.getDay()],
-    workDays: DAYS_OF_WEEK.slice(1, 6)
+    workDays: DAYS_OF_WEEK.slice(1, 6),
+    randomQuote: Quotes.getQuote(),
+    randomQuote2: tabelq()
+        
+    
 
 }
 return data;
