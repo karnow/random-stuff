@@ -4,6 +4,7 @@ const PORT = process.env.PORT || 4000
 
 const typeDefs = gql`
 type Query {
+    "A simple greeting"
     greeting: String!,
     schroedingersCatGreeting: String,
     intereStringUrls: [String!]!,
@@ -16,7 +17,11 @@ type Query {
     randomQuote:Quote,
     randomQuote2:[Quote]
 }
+"""
+# The object represeting a quote
+## It contains a text and author's name
 
+"""
 type Quote {
     text: String!,
     author: String!
@@ -49,8 +54,9 @@ const getRandomCoinTossesUntilTrue =()=> {
     return result;
     };
 const tabelq= ()=> { 
-    tableQuotes[0]= Quotes.getQuote(); 
-    tableQuotes[1]= Quotes.getQuote();
+    tableQuotes.push(Quotes.getQuote()); 
+    tableQuotes.push(Quotes.getQuote());
+    tableQuotes.push(Quotes.getQuote());
     return tableQuotes
 } 
 
